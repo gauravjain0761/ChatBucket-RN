@@ -1,0 +1,112 @@
+import { FC } from 'react';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { useAppDispatch } from '../redux/hooks';
+import { colors } from '../theme/colors';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import HomeScreen from '../screens/HomeScreen';
+import { SCREENS } from './screenNames';
+import IntroScreen from '../screens/Auth/IntroScreen';
+import LoginScreen from '../screens/Auth/LoginScreen';
+import { IMAGES } from '../assets/Images';
+import { AppStyles } from '../theme/appStyles';
+import SignupScreen from '../screens/Auth/SignupScreen';
+import OTPScreen from '../screens/Auth/OTPScreen';
+import MissCallScreen from '../screens/Auth/MissCallScreen';
+export type RootStackParamList = {
+  HomeScreen: undefined
+};
+const headerStyleTransparent = {
+  headerStyle: {
+    backgroundColor: colors.mainPurple,
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  headerTitleStyle: {
+    // ...commonFontStyle(i18n.language, 500, 19, colors.black),
+  },
+  headerTitleAlign: 'center',
+  ...TransitionPresets.SlideFromRightIOS,
+};
+const Stack = createStackNavigator<RootStackParamList>();
+
+const BackHeader = ({ navigation }: any) => {
+  return (
+    <TouchableOpacity onPress={() => navigation.goBack()} style={AppStyles.headerBackView}>
+      <Image source={IMAGES.rightArrow} style={AppStyles.headerBackIcon} />
+    </TouchableOpacity>
+  )
+}
+
+const StackNavigator: FC = () => {
+  const dispatch = useAppDispatch();
+
+
+  //   const checkNotification = (remoteMessage: any) => {};
+  // useEffect(() => {
+  //   messaging().onNotificationOpenedApp(remoteMessage => {
+  //     if (remoteMessage) {
+  //       console.log(
+  //         'Notification caused app to open from background state:',
+  //         remoteMessage.notification,
+  //       );
+  //       checkNotification(remoteMessage);
+  //     }
+  //   });
+  //   // Check whether an initial notification is available
+  //   messaging()
+  //     .getInitialNotification()
+  //     .then(remoteMessage => {
+  //       console.log('getInitialNotification', remoteMessage);
+  //       if (remoteMessage) {
+  //         console.log(
+  //           'Notification caused app to open from quit state:',
+  //           remoteMessage.notification,
+  //         );
+  //       }
+  //       checkNotification(remoteMessage);
+  //     });
+  //   messaging().setBackgroundMessageHandler(async remoteMessage => {
+  //     console.log('Message handled in the background!', remoteMessage);
+  //     checkNotification(remoteMessage);
+  //   });
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     console.log('A new FCM message arrived!', remoteMessage);
+  //     checkNotification(remoteMessage);
+  //     onDisplayNotification(remoteMessage);
+  //   });
+  //   return unsubscribe;
+  // }, []);
+  // async function onDisplayNotification(message: any) {
+  //   // Request permissions (required for iOS)
+  //   await notifee.requestPermission();
+
+  //   const channelId = await notifee.createChannel({
+  //     id: 'default',
+  //     name: 'Default Channel',
+  //     importance: AndroidImportance.HIGH,
+  //   });
+  //   notifee.displayNotification({
+  //     title: message.notification.title,
+  //     body: message.notification.body,
+  //     android: {
+  //       channelId,
+  //       smallIcon: 'ic_stat_name',
+  //       sound: 'noti.mp3',
+  //     },
+  //     ios: {
+  //       sound: 'noti.wav',
+  //     },
+  //   });
+  // }
+  return (
+    <Stack.Navigator initialRouteName={SCREENS.IntroScreen}>
+      <Stack.Screen options={({ navigation }) => ({ headerShown: false })} name={SCREENS.IntroScreen} component={IntroScreen} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.LoginScreen} component={LoginScreen} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.SignupScreen} component={SignupScreen} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.OTPScreen} component={OTPScreen} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.MissCallScreen} component={MissCallScreen} />
+
+    </Stack.Navigator>
+  );
+};
+export default StackNavigator;

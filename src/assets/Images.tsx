@@ -1,0 +1,22 @@
+export const IMAGES = {
+    logoChat: require('./logoChat.png'),
+    introImage: require('./introImage.png'),
+    rightArrow: require('./rightArrow.png'),
+    userInput: require('./userInput.png'),
+    passwordInput: require('./passwordInput.png'),
+    bottomArrow: require('./bottomArrow.png'),
+    otpInput: require('./otpInput.png'),
+    successInput: require('./successInput.png'),
+    usernameInput: require('./usernameInput.png'),
+    callingInput: require('./callingInput.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+
+}

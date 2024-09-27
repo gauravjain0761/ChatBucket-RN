@@ -1,118 +1,85 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { LogBox, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import store from './src/redux';
+import Toast from 'react-native-toast-message';
+import { colors } from './src/theme/colors';
+import { hp, commonFontStyle } from './src/theme/fonts';
+import StackNavigator from './src/navigation/StackNavigator';
+import RootContainer from './src/navigation/mainNavigator';
+import SplashScreen from 'react-native-splash-screen';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+type Props = {};
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = (props: Props) => {
+  LogBox.ignoreAllLogs()
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const toastConfig = {
+    success: ({ text1, text2, type, props, ...rest }: any) =>
+      type === 'success' && (
+        <View style={styles.textStyleToastSuccess}>
+          <Text style={styles.textStyleToast}>{text1}</Text>
+        </View>
+      ),
+    error: ({ text1, text2, type, props, ...rest }: any) => {
+      if (type === 'error') {
+        return (
+          <View style={styles.toastStyle}>
+            <Text style={styles.textStyleToast}>{text1}</Text>
+          </View>
+        );
+      }
+    },
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide()
+    }, 3000);
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  }, [])
+
+
+  return (
+    <Provider store={store}>
+      <View style={{ flex: 1 }}>
+        <RootContainer />
+        <Toast
+          config={toastConfig}
+          position="bottom"
+        />
+      </View>
+    </Provider>
+  );
+};
 
 export default App;
+
+const styles = StyleSheet.create({
+  toastStyle: {
+    backgroundColor: 'white',
+    paddingVertical: 15,
+    paddingLeft: 10,
+    paddingRight: 50,
+    borderRadius: 5,
+    borderLeftWidth: 6,
+    borderLeftColor: 'red',
+    borderWidth: 1.5,
+    borderColor: 'red',
+  },
+  textStyleToastSuccess: {
+    backgroundColor: colors.white,
+    paddingVertical: 15,
+    paddingLeft: 10,
+    paddingRight: 50,
+    borderRadius: 5,
+    borderLeftWidth: 6,
+    borderLeftColor: 'green',
+    borderWidth: 1.5,
+    borderColor: 'green',
+  },
+  textStyleToast: {
+    marginLeft: hp(2),
+    ...commonFontStyle(500, 14, colors.black),
+  },
+});
