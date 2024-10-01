@@ -3,7 +3,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { useAppDispatch } from '../redux/hooks';
 import { colors } from '../theme/colors';
 import { Image, Text, TouchableOpacity } from 'react-native';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/Home/HomeScreen';
 import { SCREENS } from './screenNames';
 import IntroScreen from '../screens/Auth/IntroScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
@@ -12,15 +12,24 @@ import { AppStyles } from '../theme/appStyles';
 import SignupScreen from '../screens/Auth/SignupScreen';
 import OTPScreen from '../screens/Auth/OTPScreen';
 import MissCallScreen from '../screens/Auth/MissCallScreen';
+import SetUsernameScreen from '../screens/Auth/SetUsernameScreen';
+import SetProfileScreen from '../screens/Auth/SetProfileScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MyTabbar from '../component/MyTabbar';
+import ContactsScreen from '../screens/Contacts/ContactsScreen';
+import CallScreen from '../screens/Call/CallScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 export type RootStackParamList = {
   HomeScreen: undefined
 };
 const headerStyleTransparent = {
   headerStyle: {
-    backgroundColor: colors.mainPurple,
+    backgroundColor: colors._7A5DCB_purple,
+
     shadowOpacity: 0,
     elevation: 0,
   },
+  headerTransparent: true,
   headerTitleStyle: {
     // ...commonFontStyle(i18n.language, 500, 19, colors.black),
   },
@@ -99,14 +108,80 @@ const StackNavigator: FC = () => {
   //   });
   // }
   return (
-    <Stack.Navigator initialRouteName={SCREENS.IntroScreen}>
+    <Stack.Navigator initialRouteName={SCREENS.HomeScreen}>
       <Stack.Screen options={({ navigation }) => ({ headerShown: false })} name={SCREENS.IntroScreen} component={IntroScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.LoginScreen} component={LoginScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.SignupScreen} component={SignupScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.OTPScreen} component={OTPScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.MissCallScreen} component={MissCallScreen} />
-
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.SetUsernameScreen} component={SetUsernameScreen} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.SetProfileScreen} component={SetProfileScreen} />
+      <Stack.Screen
+        name={SCREENS.HomeScreen}
+        component={MyTabs}
+        options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
 export default StackNavigator;
+
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator
+      tabBar={props => <MyTabbar {...props} />}
+      // initialRouteName={screenName.indiansPage}
+
+      screenOptions={({ route }) => ({
+        tabBarHideOnKeyboard: true,
+      })}>
+      <Tab.Screen
+        options={({ navigation }) => ({
+          tabBarLabel: 'Home',
+          title: '',
+          headerShown: false
+        })}
+        name={SCREENS.HomeScreen}
+        component={HomeScreen}
+      />
+      <Tab.Screen
+        options={({ navigation }) => ({
+          tabBarLabel: 'Contacts',
+          title: '',
+          headerStyle: {
+            shadowColor: colors.black,
+            elevation: 50,
+          },
+        })}
+        name={SCREENS.ContactsScreen}
+        component={ContactsScreen}
+      />
+      <Tab.Screen
+        options={({ navigation }) => ({
+          tabBarLabel: 'Calls',
+          title: '',
+          headerStyle: {
+            shadowColor: colors.black,
+            elevation: 50,
+          },
+        })}
+        name={SCREENS.CallScreen}
+        component={CallScreen}
+      />
+      <Tab.Screen
+        options={({ navigation }) => ({
+          tabBarLabel: '',
+          title: '',
+          headerStyle: {
+            shadowColor: colors.black,
+            elevation: 50,
+          },
+        })}
+        name={SCREENS.ProfileScreen}
+        component={ProfileScreen}
+      />
+    </Tab.Navigator>
+  )
+}

@@ -5,8 +5,8 @@ import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp, SCREEN_WIDTH } from '../../theme/fonts'
 import { colors } from '../../theme/colors'
-import Input from '../../compoment/Input'
-import ButtonPurple from '../../compoment/ButtonPurple'
+import Input from '../../component/Input'
+import ButtonPurple from '../../component/ButtonPurple'
 import { SCREENS } from '../../navigation/screenNames'
 
 type Props = {}
@@ -29,7 +29,7 @@ const MissCallScreen = (props: Props) => {
                     <View style={{ marginVertical: hp(5) }}>
                         <ActivityIndicator size={'large'} color={colors.mainPurple} />
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate(SCREENS.LoginScreen)} style={styles.loginTextView}>
+                    <TouchableOpacity onPress={() => navigation.navigate(SCREENS.SetUsernameScreen)} style={styles.loginTextView}>
                         <Text style={styles.bottomText}>Didn’t receive call? <Text style={commonFontStyle(500, 14, colors.mainPurple)}>Request again</Text></Text>
                     </TouchableOpacity>
                 </SafeAreaView>

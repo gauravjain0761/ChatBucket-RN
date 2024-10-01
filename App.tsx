@@ -42,7 +42,7 @@ const App = (props: Props) => {
 
   return (
     <Provider store={store}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors._7A5DCB_purple }}>
         <RootContainer />
         <Toast
           config={toastConfig}

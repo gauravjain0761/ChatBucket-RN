@@ -5,8 +5,8 @@ import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp, SCREEN_WIDTH } from '../../theme/fonts'
 import { colors } from '../../theme/colors'
-import Input from '../../compoment/Input'
-import ButtonPurple from '../../compoment/ButtonPurple'
+import Input from '../../component/Input'
+import ButtonPurple from '../../component/ButtonPurple'
 import { SCREENS } from '../../navigation/screenNames'
 import {
     CodeField,
@@ -58,8 +58,8 @@ const OTPScreen = () => {
                             </View>
                         )}
                     />
-                    <ButtonPurple onPress={() => navigation.navigate(SCREENS.SignupScreen)} title={'Submit'} />
-                    <TouchableOpacity onPress={() => navigation.navigate(SCREENS.LoginScreen)} style={styles.loginTextView}>
+                    <ButtonPurple onPress={() => navigation.navigate(SCREENS.SetUsernameScreen)} title={'Submit'} />
+                    <TouchableOpacity onPress={() => { }} style={styles.loginTextView}>
                         <Text style={styles.bottomText}>Didn’t receive OTP? <Text style={commonFontStyle(500, 14, colors.mainPurple)}>Resend</Text></Text>
                     </TouchableOpacity>
                 </SafeAreaView>

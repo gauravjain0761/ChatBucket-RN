@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { useAppSelector } from '../redux/hooks';
-import Loader from '../compoment/Loader';
+import Loader from '../component/Loader';
 import StackNavigator from './StackNavigator';
 import { StatusBar } from 'react-native';
 import { colors } from '../theme/colors';

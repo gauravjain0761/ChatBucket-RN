@@ -4,7 +4,7 @@ import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp, SCREEN_WIDTH } from '../../theme/fonts'
 import { colors } from '../../theme/colors'
-import ButtonPurple from '../../compoment/ButtonPurple'
+import ButtonPurple from '../../component/ButtonPurple'
 import { useNavigation } from '@react-navigation/native'
 import { SCREENS } from '../../navigation/screenNames'
 

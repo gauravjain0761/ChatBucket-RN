@@ -1,4 +1,6 @@
-import MissCallScreen from "../screens/Auth/MissCallScreen";
+import CallScreen from "../screens/Call/CallScreen";
+import ContactsScreen from "../screens/Contacts/ContactsScreen";
+import ProfileScreen from "../screens/Profile/ProfileScreen";
 
 export const SCREENS = {
     LoginScreen: 'LoginScreen',
@@ -6,4 +8,10 @@ export const SCREENS = {
     SignupScreen: 'SignupScreen',
     OTPScreen: 'OTPScreen',
     MissCallScreen: "MissCallScreen",
+    SetUsernameScreen: 'SetUsernameScreen',
+    SetProfileScreen: 'SetProfileScreen',
+    HomeScreen: 'HomeScreen',
+    ContactsScreen: "ContactsScreen",
+    CallScreen: "CallScreen",
+    ProfileScreen: "ProfileScreen",
 }

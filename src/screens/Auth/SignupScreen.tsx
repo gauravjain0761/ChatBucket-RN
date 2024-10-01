@@ -5,10 +5,10 @@ import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp } from '../../theme/fonts'
 import { colors } from '../../theme/colors'
-import Input from '../../compoment/Input'
-import ButtonPurple from '../../compoment/ButtonPurple'
+import Input from '../../component/Input'
+import ButtonPurple from '../../component/ButtonPurple'
 import { SCREENS } from '../../navigation/screenNames'
-import { styles as inputStyle } from '../../compoment/Input'
+import { styles as inputStyle } from '../../component/Input'
 import CountryPicker from 'react-native-country-picker-modal'
 
 type Props = {}

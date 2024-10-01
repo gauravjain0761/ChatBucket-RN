@@ -32,6 +32,11 @@ export const AppStyles = StyleSheet.create({
         borderTopEndRadius: 20,
         borderTopStartRadius: 20
     },
+    bottomWhiteViewWithoutPadding: {
+        backgroundColor: colors.white,
+        borderTopEndRadius: 20,
+        borderTopStartRadius: 20
+    },
     chatLogo: {
         height: 97,
         width: 97,
@@ -39,9 +44,14 @@ export const AppStyles = StyleSheet.create({
         alignSelf: 'center'
     },
     chatLogo2: {
-        height: 140,
-        width: 140,
+        height: 120,
+        width: 120,
         resizeMode: 'contain',
         alignSelf: 'center'
+    },
+    rightIconTextInput: {
+        height: 15,
+        width: 15,
+        resizeMode: 'contain',
     }
 })
