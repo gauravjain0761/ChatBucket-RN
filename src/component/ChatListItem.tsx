@@ -6,9 +6,11 @@ import { IMAGES } from '../assets/Images'
 import { AppStyles } from '../theme/appStyles'
 import RenderUserIcon from './RenderUserIcon'
 
-type Props = {}
+type Props = {
+    showTime?: Boolean
+}
 
-const ChatListItem = (props: Props) => {
+const ChatListItem = ({ showTime = true }: Props) => {
     return (
         <TouchableHighlight underlayColor={colors.white}>
             <View style={styles.rowView}>
@@ -18,7 +20,7 @@ const ChatListItem = (props: Props) => {
                         <View style={AppStyles.flex}>
                             <Text style={styles.title}>Gyllinton</Text>
                         </View>
-                        <Text style={styles.timeText}>9:01 am</Text>
+                        {showTime && <Text style={styles.timeText}>9:01 am</Text>}
                     </View>
                     <Text numberOfLines={1} style={styles.lastMessage}>I don't know what you're </Text>
                 </View>

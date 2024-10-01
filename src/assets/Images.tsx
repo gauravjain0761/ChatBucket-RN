@@ -26,7 +26,7 @@ export const IMAGES = {
     moreMenu: require('./moreMenu.png'),
     searchIcon: require('./searchIcon.png'),
     deleteIcon: require('./deleteIcon.png'),
-    // introImage:require('./introImage.png'),
+    Qr_Code: require('./Qr_Code.png'),
     // introImage:require('./introImage.png'),
     // introImage:require('./introImage.png'),
     // introImage:require('./introImage.png'),

@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import { Image, SafeAreaView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import GradientView from '../../component/GradientView'
 import { AppStyles } from '../../theme/appStyles'
@@ -31,8 +31,8 @@ const HomeScreen = (props: Props) => {
 
     return (
         <GradientView>
-            <View style={AppStyles.flex}>
-                <HomeHeader />
+            <SafeAreaView style={AppStyles.flex}>
+                <HomeHeader type={'home'} />
                 <View style={[AppStyles.bottomWhiteViewWithoutPadding, { flex: 1, paddingVertical: hp(2) }]}>
                     <View style={styles.searchView}>
                         <SearchInput value={search} onChangeText={setsearch} />
@@ -51,7 +51,7 @@ const HomeScreen = (props: Props) => {
                         )}
                     />
                 </View>
-            </View>
+            </SafeAreaView>
         </GradientView>
     )
 }

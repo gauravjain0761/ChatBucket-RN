@@ -140,7 +140,6 @@ function MyTabs() {
       <Tab.Screen
         options={({ navigation }) => ({
           tabBarLabel: 'Home',
-          title: '',
           headerShown: false
         })}
         name={SCREENS.HomeScreen}
@@ -149,11 +148,7 @@ function MyTabs() {
       <Tab.Screen
         options={({ navigation }) => ({
           tabBarLabel: 'Contacts',
-          title: '',
-          headerStyle: {
-            shadowColor: colors.black,
-            elevation: 50,
-          },
+          headerShown: false
         })}
         name={SCREENS.ContactsScreen}
         component={ContactsScreen}
