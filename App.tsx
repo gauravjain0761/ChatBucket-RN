@@ -1,12 +1,12 @@
-import { LogBox, StyleSheet, Text, View } from 'react-native';
+import { LogBox, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import store from './src/redux';
 import Toast from 'react-native-toast-message';
 import { colors } from './src/theme/colors';
-import { hp, commonFontStyle } from './src/theme/fonts';
-import StackNavigator from './src/navigation/StackNavigator';
-import RootContainer from './src/navigation/mainNavigator';
+import { hp, commonFontStyle, SCREEN_WIDTH } from './src/theme/fonts';
+import StackNavigator from './src/navigation/Navigator';
+import RootContainer from './src/navigation/RootContainer';
 import SplashScreen from 'react-native-splash-screen';
 
 type Props = {};
@@ -17,28 +17,24 @@ const App = (props: Props) => {
   const toastConfig = {
     success: ({ text1, text2, type, props, ...rest }: any) =>
       type === 'success' && (
-        <View style={styles.textStyleToastSuccess}>
-          <Text style={styles.textStyleToast}>{text1}</Text>
-        </View>
+        <SafeAreaView>
+          <View style={styles.textStyleToastSuccess}>
+            <Text style={styles.textStyleToast}>{text1}</Text>
+          </View>
+        </SafeAreaView>
       ),
     error: ({ text1, text2, type, props, ...rest }: any) => {
       if (type === 'error') {
         return (
-          <View style={styles.toastStyle}>
-            <Text style={styles.textStyleToast}>{text1}</Text>
-          </View>
+          <SafeAreaView>
+            <View style={styles.toastStyle}>
+              <Text style={styles.textStyleToast}>{text1}</Text>
+            </View>
+          </SafeAreaView>
         );
       }
     },
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide()
-    }, 3000);
-
-  }, [])
-
 
   return (
     <Provider store={store}>
@@ -46,7 +42,8 @@ const App = (props: Props) => {
         <RootContainer />
         <Toast
           config={toastConfig}
-          position="bottom"
+          position="top"
+          topOffset={0}
         />
       </View>
     </Provider>
@@ -57,29 +54,19 @@ export default App;
 
 const styles = StyleSheet.create({
   toastStyle: {
-    backgroundColor: 'white',
-    paddingVertical: 15,
-    paddingLeft: 10,
-    paddingRight: 50,
-    borderRadius: 5,
-    borderLeftWidth: 6,
-    borderLeftColor: 'red',
-    borderWidth: 1.5,
-    borderColor: 'red',
+    backgroundColor: 'red',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    width: SCREEN_WIDTH,
   },
   textStyleToastSuccess: {
-    backgroundColor: colors.white,
-    paddingVertical: 15,
-    paddingLeft: 10,
-    paddingRight: 50,
-    borderRadius: 5,
-    borderLeftWidth: 6,
-    borderLeftColor: 'green',
-    borderWidth: 1.5,
-    borderColor: 'green',
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    width: SCREEN_WIDTH,
   },
   textStyleToast: {
-    marginLeft: hp(2),
-    ...commonFontStyle(500, 14, colors.black),
+    ...commonFontStyle(500, 14, colors.white),
+    textAlign: 'center'
   },
 });

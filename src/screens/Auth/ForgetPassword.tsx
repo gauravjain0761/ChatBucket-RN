@@ -12,11 +12,11 @@ import { styles as inputStyle } from '../../component/Input'
 import CountryPicker from 'react-native-country-picker-modal'
 import { emailCheck, errorToast, mobileNumberCheck } from '../../utils/commonFunction'
 import { useAppDispatch } from '../../redux/hooks'
-import { onRegister } from '../../service/AuthServices'
+import { onForgetPassword, onRegister } from '../../service/AuthServices'
 
 type Props = {}
 
-const SignupScreen = (props: Props) => {
+const ForgetPassword = (props: Props) => {
     const navigation = useNavigation()
     const [email, setemail] = useState('')
     const [mobile, setmobile] = useState('')
@@ -43,10 +43,10 @@ const SignupScreen = (props: Props) => {
                         email: ''
                     },
                     onSuccess: (res: any) => {
-                        navigation.navigate(SCREENS.OTPScreen)
+                        navigation.navigate(SCREENS.OTPScreen, { type: 'forget' })
                     }
                 }
-                dispatch(onRegister(obj))
+                dispatch(onForgetPassword(obj))
             }
         } else {
             if (!emailCheck(email.trim())) {
@@ -60,22 +60,23 @@ const SignupScreen = (props: Props) => {
                         email: email.trim(),
                     },
                     onSuccess: (res: any) => {
-                        navigation.navigate(SCREENS.OTPScreen, { email: email.trim() })
+                        navigation.navigate(SCREENS.OTPScreen, { type: 'forget' })
                     }
                 }
-                dispatch(onRegister(obj))
+                dispatch(onForgetPassword(obj))
             }
         }
     }
+
 
     return (
         <View style={AppStyles.purpleMainContainer}>
             <View style={[AppStyles.flex, { justifyContent: 'center' }]}>
                 <View style={[AppStyles.flex, { justifyContent: 'center' }]}>
-                    <Image source={IMAGES.logoChat} style={AppStyles.chatLogo} />
+                    <Image source={IMAGES.forgetPassInput} style={AppStyles.chatLogo2} />
                 </View>
-                <Text style={styles.titleText}>Create account</Text>
-                <Text style={styles.des}>Please enter your details</Text>
+                <Text style={styles.titleText}>Forgot password</Text>
+                <Text style={styles.des}>Please enter details below</Text>
             </View>
             <View style={AppStyles.bottomWhiteView}>
                 <SafeAreaView>
@@ -116,14 +117,14 @@ const SignupScreen = (props: Props) => {
                         :
                         <Input value={email} extraStyle={styles.input} onChangeText={setemail} placeHolder={'Enter email'} title={'Enter your email'} />
                     }
-                    <ButtonPurple extraStyle={{ marginBottom: type == 'email' ? hp(6) : hp(0) }} onPress={() => onSignup()} title={'Verify'} />
+                    <ButtonPurple extraStyle={{ marginBottom: type == 'email' ? hp(6) : hp(0) }} onPress={() => onSignup()} title={'Next'} />
                 </SafeAreaView>
             </View>
         </View>
     )
 }
 
-export default SignupScreen
+export default ForgetPassword
 
 const styles = StyleSheet.create({
     titleText: {

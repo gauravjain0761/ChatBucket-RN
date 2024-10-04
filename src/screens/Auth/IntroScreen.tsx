@@ -1,5 +1,5 @@
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp, SCREEN_WIDTH } from '../../theme/fonts'
@@ -7,13 +7,57 @@ import { colors } from '../../theme/colors'
 import ButtonPurple from '../../component/ButtonPurple'
 import { useNavigation } from '@react-navigation/native'
 import { SCREENS } from '../../navigation/screenNames'
+import { dispatchAction, useAppDispatch } from '../../redux/hooks'
+import { getAsyncToken, getAsyncUserInfo } from '../../utils/asyncStorage'
+import { SET_USER_INFO } from '../../redux/actionTypes'
+import { setAuthorization } from '../../utils/apiGlobal'
+import SplashScreen from 'react-native-splash-screen'
+import { resetNavigation } from '../../utils/commonFunction'
 
 type Props = {}
 
 const IntroScreen = (props: Props) => {
     const navigation = useNavigation()
+    const dispatch = useAppDispatch()
+    const [loading, setloading] = useState(true)
+
+    useEffect(() => {
+        getToken()
+
+    }, [])
+
+
+    const getToken = async () => {
+        let token = await getAsyncToken()
+        console.log(token)
+        if (token) {
+            let userData = await getAsyncUserInfo()
+            dispatchAction(dispatch, SET_USER_INFO, userData)
+            await setAuthorization(token?.split(' ')[1])
+            // resetNavigation(SCREENS.HomeScreen, undefined)
+            setTimeout(() => {
+
+                SplashScreen.hide()
+                setloading(false)
+            }, 2000);
+        } else {
+            setTimeout(() => {
+                SplashScreen.hide()
+                setloading(false)
+            }, 2000);
+        }
+    }
+
+
+
+
+
+
+
+
+
     return (
-        <View style={AppStyles.purpleMainContainer}>
+        !loading ? <View style={AppStyles.purpleMainContainer}>
             <View style={[AppStyles.flex, { justifyContent: 'center' }]}>
                 <Image source={IMAGES.introImage} style={styles.introImage} />
             </View>
@@ -28,7 +72,7 @@ const IntroScreen = (props: Props) => {
                     </TouchableOpacity>
                 </SafeAreaView>
             </View>
-        </View>
+        </View> : <View />
     )
 }
 

@@ -1,6 +1,6 @@
-import { Image, StyleSheet, TouchableOpacity, Text, SafeAreaView, View, Clipboard, ActivityIndicator } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, Text, SafeAreaView, View, Clipboard, ActivityIndicator, Platform } from 'react-native'
 import React, { useRef, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp, SCREEN_WIDTH } from '../../theme/fonts'
@@ -13,17 +13,24 @@ import RenderRadioButton from '../../component/RenderRadioButton'
 import ImageCropPicker from 'react-native-image-crop-picker'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import { dispatchAction, useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { errorToast, resetNavigation } from '../../utils/commonFunction'
+import { onSetupProfile } from '../../service/AuthServices'
+import { SET_OTP_TOKEN } from '../../redux/actionTypes'
 
 type Props = {}
 
 const SetProfileScreen = (props: Props) => {
     const navigation = useNavigation()
-    const [userName, setuserName] = useState('')
     const [profileImage, setprofileImage] = useState('')
     const [DOB, setDOB] = useState('')
     const [bio, setbio] = useState('')
     const [gender, setGender] = useState('male')
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const { user, otpToken } = useAppSelector(e => e.common)
+    const { params } = useRoute()
+    const dispatch = useAppDispatch()
+    const [userName, setuserName] = useState('')
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -50,6 +57,35 @@ const SetProfileScreen = (props: Props) => {
         })
     }
 
+    const onDone = () => {
+        if (profileImage == '') {
+            errorToast('Please select profile image')
+        } else if (userName.trim() == '') {
+            errorToast('Please enter name')
+        } else if (DOB == '') {
+            errorToast("Please select Date of Birth")
+        } else {
+            let obj = {
+                data: {
+                    ...params?.data,
+                    name: userName.trim(),
+                    bio: bio.trim(),
+                    gender: gender,
+                    dateOfBirth: moment(DOB).toISOString(),
+                    gender: gender == 'no' ? '' : gender.toUpperCase(),
+                    image: 'text',
+                    deviceType: Platform.OS == 'android' ? 'ANDROID' : 'IOS',
+                    token: otpToken
+                },
+                onSuccess: () => {
+                    resetNavigation(SCREENS.HomeScreen, undefined)
+                    dispatchAction(dispatch, SET_OTP_TOKEN, undefined)
+                }
+            }
+            dispatch(onSetupProfile(obj))
+        }
+    }
+
 
     return (
         <View style={AppStyles.purpleMainContainer}>
@@ -73,7 +109,7 @@ const SetProfileScreen = (props: Props) => {
                         </TouchableOpacity>
                     }
 
-                    <Input value={userName} extraStyle={styles.input} onChangeText={setuserName} icon={IMAGES.userInput} placeHolder={'Eg: William james'} title={'Enter username'} />
+                    <Input value={userName} extraStyle={styles.input} onChangeText={setuserName} icon={IMAGES.userInput} placeHolder={'Eg: William james'} title={'Enter name'} />
                     <Input value={bio} extraStyle={styles.input} textInputStyle={styles.multiLineStyle} onChangeText={setbio} placeHolder={'Write something here..'} title={'Bio (Optional)'} />
                     <TouchableOpacity onPress={() => setDatePickerVisibility(true)} activeOpacity={1}>
                         <Input editable={false} RenderRightIcon={() => { return (<Image source={IMAGES.calender} style={styles.rightIconTextInput} />) }} value={DOB == '' ? '' : moment(DOB).format('DD/MM/YYYY')} extraStyle={styles.input} onChangeText={setDOB} placeHolder={'DD/MM/YYYY'} title={'Date of birth'} />
@@ -95,7 +131,7 @@ const SetProfileScreen = (props: Props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <ButtonPurple onPress={() => navigation.navigate(SCREENS.HomeScreen)} title={'Done'} />
+                    <ButtonPurple onPress={() => onDone()} title={'Done'} />
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
                         mode="date"

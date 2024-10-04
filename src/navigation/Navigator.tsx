@@ -19,6 +19,8 @@ import MyTabbar from '../component/MyTabbar';
 import ContactsScreen from '../screens/Contacts/ContactsScreen';
 import CallScreen from '../screens/Call/CallScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import ForgetPassword from '../screens/Auth/ForgetPassword';
+import SetNewPassword from '../screens/Auth/SetNewPassword';
 export type RootStackParamList = {
   HomeScreen: undefined
 };
@@ -108,9 +110,11 @@ const StackNavigator: FC = () => {
   //   });
   // }
   return (
-    <Stack.Navigator initialRouteName={SCREENS.HomeScreen}>
+    <Stack.Navigator initialRouteName={SCREENS.IntroScreen}>
       <Stack.Screen options={({ navigation }) => ({ headerShown: false })} name={SCREENS.IntroScreen} component={IntroScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.LoginScreen} component={LoginScreen} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.ForgetPassword} component={ForgetPassword} />
+      <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.SetNewPassword} component={SetNewPassword} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.SignupScreen} component={SignupScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.OTPScreen} component={OTPScreen} />
       <Stack.Screen options={({ navigation }) => ({ ...headerStyleTransparent, title: '', headerLeft: () => <BackHeader navigation={navigation} /> })} name={SCREENS.MissCallScreen} component={MissCallScreen} />

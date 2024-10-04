@@ -8,6 +8,9 @@ import { colors } from '../../theme/colors'
 import Input from '../../component/Input'
 import ButtonPurple from '../../component/ButtonPurple'
 import { SCREENS } from '../../navigation/screenNames'
+import { errorToast, passwordCheck, resetNavigation } from '../../utils/commonFunction'
+import { useAppDispatch } from '../../redux/hooks'
+import { onUserLogin } from '../../service/AuthServices'
 
 type Props = {}
 
@@ -15,6 +18,27 @@ const LoginScreen = (props: Props) => {
     const navigation = useNavigation()
     const [userName, setuserName] = useState('')
     const [password, setpassword] = useState('')
+    const dispatch = useAppDispatch()
+
+    const onLogin = () => {
+        if (userName.trim() == '') {
+            errorToast('Please enter username')
+        } if (!passwordCheck(password)) {
+            errorToast('Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character')
+        } else {
+            let obj = {
+                data: {
+                    username: userName.trim(),
+                    password: password.trim()
+                },
+                onSuccess: () => {
+                    resetNavigation(SCREENS.HomeScreen, undefined)
+                }
+            }
+            dispatch(onUserLogin(obj))
+        }
+    }
+
 
     return (
         <View style={AppStyles.purpleMainContainer}>
@@ -28,15 +52,14 @@ const LoginScreen = (props: Props) => {
             <View style={AppStyles.bottomWhiteView}>
                 <SafeAreaView>
                     <Input value={userName} extraStyle={styles.input} onChangeText={setuserName} icon={IMAGES.userInput} placeHolder={'Eg: James_43'} title={'Enter username'} />
-                    <Input value={password} extraStyle={styles.input} onChangeText={setpassword} icon={IMAGES.passwordInput} placeHolder={'*********'} title={'Enter password'} />
-                    <ButtonPurple onPress={() => navigation.navigate(SCREENS.SignupScreen)} title={'Login'} />
-                    <TouchableOpacity onPress={() => navigation.navigate(SCREENS.LoginScreen)} style={styles.loginTextView}>
+                    <Input value={password} extraStyle={styles.input} onChangeText={setpassword} icon={IMAGES.passwordInput} secureTextEntry={true} placeHolder={'*********'} title={'Enter password'} />
+                    <ButtonPurple onPress={() => onLogin()} title={'Login'} />
+                    <TouchableOpacity onPress={() => navigation.navigate(SCREENS.ForgetPassword)} style={styles.loginTextView}>
                         <Text style={styles.bottomText}><Text style={commonFontStyle(500, 14, colors.mainPurple)}>Forgot password?</Text></Text>
                     </TouchableOpacity>
                 </SafeAreaView>
             </View>
         </View>
-
     )
 }
 

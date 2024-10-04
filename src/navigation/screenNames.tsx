@@ -14,4 +14,6 @@ export const SCREENS = {
     ContactsScreen: "ContactsScreen",
     CallScreen: "CallScreen",
     ProfileScreen: "ProfileScreen",
+    ForgetPassword: "ForgetPassword",
+    SetNewPassword: "SetNewPassword"
 }

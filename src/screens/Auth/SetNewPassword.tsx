@@ -9,27 +9,20 @@ import Input from '../../component/Input'
 import ButtonPurple from '../../component/ButtonPurple'
 import { SCREENS } from '../../navigation/screenNames'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { errorToast, passwordCheck } from '../../utils/commonFunction'
-import { onVerifyUsername } from '../../service/AuthServices'
+import { errorToast, passwordCheck, resetNavigation } from '../../utils/commonFunction'
+import { onResetPassword, onVerifyUsername } from '../../service/AuthServices'
 
 type Props = {}
 
-const SetUsernameScreen = (props: Props) => {
+const SetNewPassword = (props: Props) => {
     const navigation = useNavigation()
-    const [userName, setuserName] = useState('')
     const [password, setpassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const { user, otpToken } = useAppSelector(e => e.common)
-    const [validateUsername, setvalidateUsername] = useState(undefined)
     const dispatch = useAppDispatch()
 
-    const onCreateAccount = () => {
-        // navigation.navigate(SCREENS.SetProfileScreen)
-        if (userName.trim().length == 0) {
-            errorToast('Please enter a valid username')
-        } else if (validateUsername == false) {
-            errorToast('Username is not available')
-        } else if (!passwordCheck(password.trim())) {
+    const onReset = () => {
+        if (!passwordCheck(password.trim())) {
             errorToast('Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character')
         } else if (password !== confirmPassword) {
             errorToast('Confirm password does not match')
@@ -39,64 +32,41 @@ const SetUsernameScreen = (props: Props) => {
                 phoneCode: user?.phoneCode,
                 phoneNumber: user?.phoneNumber,
                 email: user?.email,
-                username: userName,
                 password: password.trim(), //password,
                 token: otpToken,
             }
-            navigation.navigate(SCREENS.SetProfileScreen, { data: data })
+            let obj = {
+                data: data,
+                onSuccess: () => {
+                    resetNavigation(SCREENS.LoginScreen, undefined)
+                }
+            }
+            dispatch(onResetPassword(obj))
 
         }
     }
-
-    useEffect(() => {
-        if (userName.trim() !== '') {
-            let obj = {
-                data: {
-                    registrationType: user?.registrationType,
-                    phoneCode: user?.phoneCode,
-                    phoneNumber: user?.phoneNumber,
-                    email: user?.email,
-                    username: userName,
-                    token: otpToken,
-                },
-                onSuccess: (res: any) => {
-                    setvalidateUsername(true)
-                },
-                onFailure: (res: any) => {
-                    setvalidateUsername(false)
-                }
-            }
-            dispatch(onVerifyUsername(obj))
-        }
-    }, [userName])
-
 
     return (
         <View style={AppStyles.purpleMainContainer}>
             <View style={[AppStyles.flex, { justifyContent: 'center' }]}>
                 <View style={[AppStyles.flex, { justifyContent: 'center' }]}>
-                    <Image source={IMAGES.usernameInput} style={AppStyles.chatLogo2} />
+                    <Image source={IMAGES.resetPassInput} style={AppStyles.chatLogo2} />
                 </View>
-                <Text style={styles.titleText}>Set username</Text>
-                <Text style={styles.des}>Please enter details below</Text>
+                <Text style={styles.titleText}>Set new password</Text>
+                <Text style={styles.des}>Password must be at least 8 characters with uppercase, lowercase, numbers & symbols</Text>
             </View>
-            <View style={AppStyles.bottomWhiteView}>
+            <View style={[AppStyles.bottomWhiteView, { paddingBottom: hp(10) }]}>
                 <SafeAreaView>
-                    <Input value={userName} extraStyle={styles.input} onChangeText={setuserName} icon={IMAGES.userInput} placeHolder={'Username'} title={'Enter username'} RenderRightIcon={() => { return (<Image source={IMAGES.wrong} style={AppStyles.rightIconTextInput} />) }} />
-                    {validateUsername == false && <View style={styles.notAvailableView}>
-                        <Text style={styles.titleRed}>Username not available</Text>
-                        <Text style={styles.titleTextAvailable}>Try for : ItsWilliam_23, William023, William23</Text>
-                    </View>}
-                    <Input RenderRightIcon={() => { return (<Image source={IMAGES.right} style={AppStyles.rightIconTextInput} />) }} value={password} extraStyle={styles.input} onChangeText={setpassword} icon={IMAGES.passwordInput} secureTextEntry={true} placeHolder={'*********'} title={'Enter password'} />
+                    <Input RenderRightIcon={() => { return (<Image source={IMAGES.right} style={AppStyles.rightIconTextInput} />) }} value={password} extraStyle={styles.input} onChangeText={setpassword} icon={IMAGES.passwordInput} secureTextEntry={true} placeHolder={'*********'} title={'New password'} />
                     <Input RenderRightIcon={() => { return (<Image source={IMAGES.right} style={AppStyles.rightIconTextInput} />) }} value={confirmPassword} extraStyle={styles.input} onChangeText={setConfirmPassword} icon={IMAGES.passwordInput} secureTextEntry={true} placeHolder={'*********'} title={'Confirm password'} />
-                    <ButtonPurple onPress={() => onCreateAccount()} title={'Create account'} />
+                    <ButtonPurple onPress={() => onReset()} title={'Change password'} />
                 </SafeAreaView>
             </View>
         </View>
     )
 }
 
-export default SetUsernameScreen
+export default SetNewPassword
 
 const styles = StyleSheet.create({
     titleText: {

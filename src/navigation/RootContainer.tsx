@@ -5,7 +5,7 @@ import {
 import React, { FC } from 'react';
 import { useAppSelector } from '../redux/hooks';
 import Loader from '../component/Loader';
-import StackNavigator from './StackNavigator';
+import StackNavigator from './Navigator';
 import { StatusBar } from 'react-native';
 import { colors } from '../theme/colors';
 
@@ -17,7 +17,7 @@ const RootContainer: FC = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <StatusBar barStyle={'light-content'} backgroundColor={colors.mainPurple} />
-      {/* <Loader visible={isLoading} /> */}
+      {isLoading && <Loader />}
       <StackNavigator />
     </NavigationContainer>
   );

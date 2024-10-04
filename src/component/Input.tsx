@@ -1,7 +1,8 @@
-import { Image, StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, TextInput, View, ViewStyle } from 'react-native'
+import React, { useState } from 'react'
 import { commonFontStyle, hp } from '../theme/fonts'
 import { colors } from '../theme/colors'
+import { IMAGES } from '../assets/Images'
 
 type Props = {
     value: any,
@@ -14,10 +15,12 @@ type Props = {
     RenderRightIcon?: any,
     multiline?: Boolean,
     textInputStyle?: ViewStyle,
-    editable?: Boolean
+    editable?: Boolean,
+    secureTextEntry?: Boolean
 }
 
-const Input = ({ value, onChangeText, editable = true, icon, placeHolder, textInputStyle, RenderRightIcon, title, extraStyle, maxLength, multiline = false }: Props) => {
+const Input = ({ value, secureTextEntry = false, onChangeText, editable = true, icon, placeHolder, textInputStyle, RenderRightIcon, title, extraStyle, maxLength, multiline = false }: Props) => {
+    const [passwordHide, setpasswordHide] = useState(true);
     return (
         <View style={extraStyle}>
             <Text style={styles.title}>{title}</Text>
@@ -32,8 +35,14 @@ const Input = ({ value, onChangeText, editable = true, icon, placeHolder, textIn
                     placeholderTextColor={colors._CCCCCC_gray}
                     multiline={multiline}
                     editable={editable}
+                    secureTextEntry={secureTextEntry ? passwordHide : false}
                 />
                 {RenderRightIcon && <RenderRightIcon />}
+                {secureTextEntry &&
+                    <TouchableOpacity onPress={() => setpasswordHide(!passwordHide)}>
+                        <Image source={passwordHide ? IMAGES.view : IMAGES.hide} style={styles.imageView} />
+                    </TouchableOpacity>
+                }
             </View>
 
         </View>
@@ -63,5 +72,12 @@ export const styles = StyleSheet.create({
     icon: {
         height: 20, width: 20, resizeMode: 'contain',
         marginHorizontal: 10
-    }
+    },
+    imageView: {
+        width: 20,
+        height: 55,
+        resizeMode: 'contain',
+        marginLeft: 12,
+        tintColor: colors._CCCCCC_gray,
+    },
 })

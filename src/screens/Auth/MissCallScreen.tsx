@@ -1,6 +1,6 @@
 import { Image, StyleSheet, TouchableOpacity, Text, SafeAreaView, View, Clipboard, ActivityIndicator } from 'react-native'
-import React, { useRef, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useRef, useState } from 'react'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { AppStyles } from '../../theme/appStyles'
 import { IMAGES } from '../../assets/Images'
 import { commonFontStyle, hp, SCREEN_WIDTH } from '../../theme/fonts'
@@ -13,6 +13,18 @@ type Props = {}
 
 const MissCallScreen = (props: Props) => {
     const navigation = useNavigation()
+    const { params } = useRoute()
+
+    useEffect(() => {
+        setInterval(() => {
+            if (params?.type == 'forget') {
+                navigation.navigate(SCREENS.SetNewPassword)
+            } else {
+                navigation.navigate(SCREENS.SetUsernameScreen)
+            }
+        }, 3000);
+    }, [])
+
     return (
         <View style={AppStyles.purpleMainContainer}>
             <View style={[AppStyles.flex, { justifyContent: 'center' }]}>
