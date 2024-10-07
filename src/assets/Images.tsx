@@ -31,7 +31,18 @@ export const IMAGES = {
     resetPassInput: require('./resetPassInput.png'),
     view: require('./view.png'),
     hide: require('./hide.png'),
+    addStory: require('./addStory.png'),
+    Videocamera: require('./Videocamera.png'),
+    Phone: require('./Phone.png'),
+    chatInputPin: require('./chatInputPin.png'),
+    chatInputAdd: require('./chatInputAdd.png'),
+    microphone: require('./microphone.png'),
     // introImage:require('./introImage.png'),
     // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+    // introImage:require('./introImage.png'),
+
 
 }

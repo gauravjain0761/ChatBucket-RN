@@ -5,14 +5,17 @@ import { commonFontStyle, hp, SCREEN_WIDTH } from '../theme/fonts'
 import { IMAGES } from '../assets/Images'
 import { AppStyles } from '../theme/appStyles'
 import RenderUserIcon from './RenderUserIcon'
+import { useNavigation } from '@react-navigation/native'
+import { SCREENS } from '../navigation/screenNames'
 
 type Props = {
     showTime?: Boolean
 }
 
 const ChatListItem = ({ showTime = true }: Props) => {
+    const navigation = useNavigation();
     return (
-        <TouchableHighlight underlayColor={colors.white}>
+        <TouchableHighlight onPress={() => navigation.navigate(SCREENS.PersonalChatScreen)} underlayColor={colors.white}>
             <View style={styles.rowView}>
                 <RenderUserIcon size={50} />
                 <View style={AppStyles.flex}>

@@ -15,5 +15,6 @@ export const SCREENS = {
     CallScreen: "CallScreen",
     ProfileScreen: "ProfileScreen",
     ForgetPassword: "ForgetPassword",
-    SetNewPassword: "SetNewPassword"
+    SetNewPassword: "SetNewPassword",
+    PersonalChatScreen: "PersonalChatScreen"
 }

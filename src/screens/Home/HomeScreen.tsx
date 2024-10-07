@@ -1,5 +1,5 @@
 import { Image, SafeAreaView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GradientView from '../../component/GradientView'
 import { AppStyles } from '../../theme/appStyles'
 import HomeHeader from '../../component/HomeHeader'
@@ -9,14 +9,31 @@ import { hp } from '../../theme/fonts'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import ChatListItem from '../../component/ChatListItem'
 import { colors } from '../../theme/colors'
+import { Emit_Event, sendData, socket, socketConnect } from '../../Socket/socket'
+import { useAppDispatch } from '../../redux/hooks'
+import StoryButton from '../../component/StoryButton'
 
 type Props = {}
 
 const HomeScreen = (props: Props) => {
     const [search, setsearch] = useState('')
+    const dispatch = useAppDispatch()
     const listViewData = Array(20)
         .fill("")
         .map((_, i) => ({ key: `${i}`, text: `item #${i}` }));
+
+    useEffect(() => {
+        socketConnect(dispatch, (flag: any) => {
+            console.log(flag)
+            if (flag) {
+                // sendData(Emit_Event.CHATS_HISTORY_LIST)
+
+            }
+        });
+        // setTimeout(() => {
+        //     socket.emit(Emit_Event.CHATS_HISTORY_LIST)
+        // }, 10000);
+    }, []);
 
     const renderHiddenItem = ({ item, rowMap }: any) => (
         <View style={styles.hiddenRow}>
@@ -50,6 +67,7 @@ const HomeScreen = (props: Props) => {
                             <View style={{ height: 70 }} />
                         )}
                     />
+                    <StoryButton />
                 </View>
             </SafeAreaView>
         </GradientView>

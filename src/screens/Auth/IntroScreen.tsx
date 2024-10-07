@@ -34,7 +34,7 @@ const IntroScreen = (props: Props) => {
             let userData = await getAsyncUserInfo()
             dispatchAction(dispatch, SET_USER_INFO, userData)
             await setAuthorization(token?.split(' ')[1])
-            // resetNavigation(SCREENS.HomeScreen, undefined)
+            resetNavigation(SCREENS.HomeScreen, undefined)
             setTimeout(() => {
 
                 SplashScreen.hide()

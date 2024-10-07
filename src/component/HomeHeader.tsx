@@ -5,6 +5,7 @@ import { colors } from '../theme/colors'
 import { commonFontStyle, hp } from '../theme/fonts'
 import { useNavigation } from '@react-navigation/native'
 import { AppStyles } from '../theme/appStyles'
+import RenderUserIcon from './RenderUserIcon'
 
 type Props = {
     type: any
@@ -49,7 +50,42 @@ const HomeHeader = ({ type }: Props) => {
                 </View>
             </SafeAreaView>
         )
-    } else {
+    } else if (type == 'personalChat') {
+        return (
+            <SafeAreaView>
+                <View style={[styles.headerMainView, { paddingLeft: 0 }]}>
+                    <View style={[styles.header, { gap: 0 }]}>
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBackView}>
+                            <Image source={IMAGES.rightArrow} style={styles.headerBackIcon} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.header}>
+                            <TouchableOpacity>
+                                <RenderUserIcon size={50} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={{ ...commonFontStyle(600, 16, colors.white) }}>Alice</Text>
+                                <Text style={{ ...commonFontStyle(500, 14, colors.white) }}>Online</Text>
+                            </View>
+
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.header, { gap: 0 }]}>
+                        <TouchableOpacity>
+                            <Image source={IMAGES.Phone} style={{ height: 40, width: 26, tintColor: colors.white, marginLeft: hp(2), resizeMode: 'contain', }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image source={IMAGES.Videocamera} style={{ height: 40, width: 26, tintColor: colors.white, marginLeft: hp(2), resizeMode: 'contain', }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.moreMenu]}>
+                            <Image source={IMAGES.moreMenu} style={styles.moreMenuStyle} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </SafeAreaView>
+        )
+    }
+
+    else {
         return <SafeAreaView>
             <View style={[styles.headerMainView, { paddingLeft: 0 }]}>
                 <View style={[styles.header, { gap: 0 }]}>
@@ -61,11 +97,11 @@ const HomeHeader = ({ type }: Props) => {
                         <Text style={{ ...commonFontStyle(400, 14, colors.white) }}>51 contacts</Text>
                     </View>
                 </View>
-                <View style={[styles.header]}>
+                <View style={[styles.header, { gap: 0 }]}>
                     <TouchableOpacity>
-                        <Image source={IMAGES.Qr_Code} style={{ height: 40, width: 20, tintColor: colors.white, marginLeft: hp(2), resizeMode: 'contain' }} />
+                        <Image source={IMAGES.Qr_Code} style={{ height: 40, width: 20, tintColor: colors.white, marginLeft: hp(2), resizeMode: 'contain', }} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.moreMenu}>
+                    <TouchableOpacity style={[styles.moreMenu]}>
                         <Image source={IMAGES.moreMenu} style={styles.moreMenuStyle} />
                     </TouchableOpacity>
                 </View>

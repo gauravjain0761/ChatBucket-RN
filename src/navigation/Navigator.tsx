@@ -21,6 +21,7 @@ import CallScreen from '../screens/Call/CallScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import ForgetPassword from '../screens/Auth/ForgetPassword';
 import SetNewPassword from '../screens/Auth/SetNewPassword';
+import PersonalChatScreen from '../screens/Chat/PersonalChatScreen';
 export type RootStackParamList = {
   HomeScreen: undefined
 };
@@ -124,6 +125,7 @@ const StackNavigator: FC = () => {
         name={SCREENS.HomeScreen}
         component={MyTabs}
         options={{ headerShown: false }} />
+      <Stack.Screen options={({ navigation }) => ({ headerShown: false })} name={SCREENS.PersonalChatScreen} component={PersonalChatScreen} />
     </Stack.Navigator>
   );
 };
