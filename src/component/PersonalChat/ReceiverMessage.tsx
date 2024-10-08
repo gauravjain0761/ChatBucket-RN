@@ -1,0 +1,37 @@
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { colors } from '../../theme/colors'
+import { commonFontStyle, hp } from '../../theme/fonts'
+
+type Props = {}
+
+const ReceiverMessage = (props: Props) => {
+    return (
+        <View style={styles.mainView}>
+            <Text style={styles.simpleMessage}>I'll text you when I arrive.</Text>
+            <Text style={styles.timeText}>10:11</Text>
+        </View>
+    )
+}
+
+export default ReceiverMessage
+
+const styles = StyleSheet.create({
+    mainView: {
+        backgroundColor: colors.gray_f3,
+        marginLeft: hp(3),
+        borderTopRightRadius: 16,
+        borderBottomRightRadius: 16,
+        borderBottomLeftRadius: 16,
+        padding: 10,
+        maxWidth: '75%',
+        alignSelf: 'flex-start'
+    },
+    simpleMessage: {
+        ...commonFontStyle(400, 14, colors.black_23)
+    },
+    timeText: {
+        ...commonFontStyle(400, 12, colors._757575_gray),
+        marginTop: 5
+    }
+})
