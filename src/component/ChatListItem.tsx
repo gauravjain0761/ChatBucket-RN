@@ -7,6 +7,7 @@ import { AppStyles } from '../theme/appStyles'
 import RenderUserIcon from './RenderUserIcon'
 import { useNavigation } from '@react-navigation/native'
 import { SCREENS } from '../navigation/screenNames'
+import { Emit_Event, sendData, socket } from '../Socket/socket'
 
 type Props = {
     showTime?: Boolean
@@ -14,8 +15,28 @@ type Props = {
 
 const ChatListItem = ({ showTime = true }: Props) => {
     const navigation = useNavigation();
+
+
+    const onOpenChat = () => {
+        // sendData(Emit_Event.CHAT_LISTS, {
+        //     userId: '66ffa2daa6ae0c5151807bdd'
+        // })
+        // console.log(socket)
+        socket.emit(
+            "CHATS_LIST",
+            {
+                userId: "66ffa2daa6ae0c5151807bdd",
+            },
+            (res: any) => {
+                // navigation.navigate(SCREENS.PersonalChatScreen)
+                console.log("CHAT_LIST Res:", res);
+            }
+        );
+
+    }
+
     return (
-        <TouchableHighlight onPress={() => navigation.navigate(SCREENS.PersonalChatScreen)} underlayColor={colors.white}>
+        <TouchableHighlight onPress={() => onOpenChat()} underlayColor={colors.white}>
             <View style={styles.rowView}>
                 <RenderUserIcon size={50} />
                 <View style={AppStyles.flex}>
@@ -41,7 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         paddingHorizontal: hp(2),
         paddingVertical: hp(2),
-        gap: 15
+        gap: 15,
     },
     userImage: {
         height: 50,

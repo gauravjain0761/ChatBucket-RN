@@ -77,8 +77,28 @@ const PersonalChatScreen = (props: Props) => {
         return (
             <View style={styles.reactionView}>
                 <View style={styles.reactionRow}>
-                    <Image style={styles.reactionIcon} source={IMAGES.addReaction} />
+                    <TouchableOpacity style={styles.icon}>
+                        <Text style={{ fontSize: 20, color: colors.black }}>😄</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.icon}>
+                        <Text style={{ fontSize: 20, color: colors.black }}>🤩</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.icon}>
+                        <Text style={{ fontSize: 20, color: colors.black }}>🙏</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.icon}>
+                        <Text style={{ fontSize: 20, color: colors.black }}>💯</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.icon}>
+                        <Image style={styles.reactionIcon} source={IMAGES.addReaction} />
+                    </TouchableOpacity>
                 </View>
+                <TouchableOpacity style={{ elevation: 10, marginLeft: 10, backgroundColor: colors.white, borderRadius: 100 }} >
+                    <Image style={{ height: 40, width: 40, }} source={IMAGES.editMessage} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ elevation: 10, marginLeft: 10, backgroundColor: colors.white, borderRadius: 100 }} >
+                    <Image style={{ height: 40, width: 40, }} source={IMAGES.copyMessage} />
+                </TouchableOpacity>
             </View>
         )
     }
@@ -97,22 +117,26 @@ const PersonalChatScreen = (props: Props) => {
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item, index }) => {
                                 return (
-                                    <View>
+                                    <View style={{ flex: 1 }}>
                                         {selectedMessage == index && <RenderReactionView />}
+
                                         <TouchableOpacity activeOpacity={0.7} onPress={() => dispatchAction(dispatch, SET_SELETED_MESSAGE, undefined)} onLongPress={() => onSelectMessage(index)} style={[styles.mainMessageRow, { backgroundColor: selectedMessage == index ? colors.opacity_main_purple_10 : undefined }]}>
                                             {index % 2 == 0 ? <ReceiverMessage /> : <SenderMsg />}
                                             {/* {checkDate(item, index)} */}
                                             {/* {item?.createdBy?._id !== user._id ? <ReciverMsg data={item} /> : <SenderMsg data={item} />} */}
                                         </TouchableOpacity>
+
                                     </View>
                                 )
                             }}
+                            // style={{ position: 'relative' }}
+                            // contentContainerStyle={{ position: 'relative' }}
                             onEndReached={fetchMoreData}
                             onEndReachedThreshold={0.5}
                             ListFooterComponent={() => {
                                 return (
                                     <View>
-                                        {/* {chatMessageList && loading && (   <ActivityIndicator size={'large'} color={colors.black} /> )} */}
+                                        {/* {chatMessageList && loading && (<ActivityIndicator size={'large'} color={colors.black} /> )} */}
                                         <View style={{ height: 50 }} />
                                     </View>
                                 );
@@ -138,26 +162,40 @@ export default PersonalChatScreen
 const styles = StyleSheet.create({
     mainMessageRow: {
         paddingVertical: hp(1),
+        // position: 'relative',
+        // zIndex: 0,
+        // zIndex: 9999,
     },
     reactionView: {
-        position: 'absolute',
         flexDirection: 'row',
         alignItems: 'center',
-        top: -40,
-        zIndex: 1111,
+        // marginTop: -40,
+        // left: 8,
         alignSelf: 'center',
+        marginBottom: 10
+
+
     },
     reactionRow: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.white,
         elevation: 10,
+        borderRadius: 100
     },
     reactionIcon: {
         height: 25,
         width: 25,
         resizeMode: 'contain',
-        marginHorizontal: 5
+        // margin: 6,
+    },
+    icon: {
+        // height: 25,
+        // width: 25,
+        resizeMode: 'contain',
+        paddingHorizontal: 6,
+        height: 40,
+        justifyContent: 'center'
     }
 
 })

@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { colors } from '../../theme/colors'
 import { commonFontStyle, hp } from '../../theme/fonts'
+import { IMAGES } from '../../assets/Images'
 
 type Props = {}
 
 const ReceiverMessage = (props: Props) => {
+
     return (
         <View style={styles.mainView}>
             <Text style={styles.simpleMessage}>I'll text you when I arrive.</Text>
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 16,
         padding: 10,
         maxWidth: '75%',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
     },
     simpleMessage: {
         ...commonFontStyle(400, 14, colors.black_23)
@@ -33,5 +35,25 @@ const styles = StyleSheet.create({
     timeText: {
         ...commonFontStyle(400, 12, colors._757575_gray),
         marginTop: 5
+    },
+    reactionView: {
+        position: 'absolute',
+        flexDirection: 'row',
+        alignItems: 'center',
+        // top: -40,
+        zIndex: 1,
+        alignSelf: 'center',
+    },
+    reactionRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+        elevation: 10,
+    },
+    reactionIcon: {
+        height: 25,
+        width: 25,
+        resizeMode: 'contain',
+        marginHorizontal: 5
     }
 })

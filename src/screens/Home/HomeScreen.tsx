@@ -12,6 +12,7 @@ import { colors } from '../../theme/colors'
 import { Emit_Event, sendData, socket, socketConnect } from '../../Socket/socket'
 import { useAppDispatch } from '../../redux/hooks'
 import StoryButton from '../../component/StoryButton'
+import { useFocusEffect } from '@react-navigation/native'
 
 type Props = {}
 
@@ -26,14 +27,23 @@ const HomeScreen = (props: Props) => {
         socketConnect(dispatch, (flag: any) => {
             console.log(flag)
             if (flag) {
-                // sendData(Emit_Event.CHATS_HISTORY_LIST)
-
+                // socket.emit(Emit_Event.CHATS_HISTORY_LIST)
             }
         });
-        // setTimeout(() => {
-        //     socket.emit(Emit_Event.CHATS_HISTORY_LIST)
-        // }, 10000);
+
     }, []);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setTimeout(() => {
+                sendData(Emit_Event.CHATS_HISTORY_LIST)
+                // socket.emit(Emit_Event.CHATS_HISTORY_LIST, (res: any) => {
+                //     console.log(res)
+                // })
+            }, 500);
+        }, [])
+    );
+
 
     const renderHiddenItem = ({ item, rowMap }: any) => (
         <View style={styles.hiddenRow}>

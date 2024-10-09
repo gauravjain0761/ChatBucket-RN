@@ -30,13 +30,14 @@ const IntroScreen = (props: Props) => {
     const getToken = async () => {
         let token = await getAsyncToken()
         console.log(token)
+        // SplashScreen.hide()
+        // setloading(false)
         if (token) {
             let userData = await getAsyncUserInfo()
             dispatchAction(dispatch, SET_USER_INFO, userData)
             await setAuthorization(token?.split(' ')[1])
             resetNavigation(SCREENS.HomeScreen, undefined)
             setTimeout(() => {
-
                 SplashScreen.hide()
                 setloading(false)
             }, 2000);
@@ -47,14 +48,6 @@ const IntroScreen = (props: Props) => {
             }, 2000);
         }
     }
-
-
-
-
-
-
-
-
 
     return (
         !loading ? <View style={AppStyles.purpleMainContainer}>

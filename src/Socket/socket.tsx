@@ -1,12 +1,21 @@
 import { io } from 'socket.io-client';
-import { getAsyncToken } from '../utils/asyncStorage';
+import { getAsyncToken, getAsyncUserInfo } from '../utils/asyncStorage';
 
 
 let socket = null;
 export { socket };
 
 export const sendData = (event: any, data?: any) => {
-    socket.emit(event, data);
+    if (data) {
+        socket.emit(event, data, (res: any) => {
+            console.log(res)
+        });
+    } else {
+        socket.emit(event, (res: any) => {
+            console.log(res)
+        });
+    }
+
 };
 
 export const socketConnect = async (dispatch, next) => {
@@ -57,5 +66,6 @@ export const socketConnect = async (dispatch, next) => {
 };
 
 export const Emit_Event = {
-    CHATS_HISTORY_LIST: "CHATS_HISTORY_LIST"
+    CHATS_HISTORY_LIST: "CHATS_HISTORY_LIST",
+    CHATS_LISTS: "CHATS_LISTS"
 }
