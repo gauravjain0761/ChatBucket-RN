@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "626370367000",
+    "project_id": "chatbucket-2f001",
+    "storage_bucket": "chatbucket-2f001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626370367000:android:359e306ede6c497e743d6d",
+        "android_client_info": {
+          "package_name": "com.chatbucket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgT-USVB1Prw-_R-39DEZrbe9PWkr0HFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,8 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@notifee/react-native": "^9.1.1",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-community/datetimepicker": "^8.2.0",
+    "@react-native-firebase/app": "^21.0.0",
+    "@react-native-firebase/messaging": "^21.0.0",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
@@ -22,6 +25,7 @@
     "react-native": "0.74.5",
     "react-native-call-detection": "^1.9.0",
     "react-native-confirmation-code-field": "^7.4.0",
+    "react-native-contacts": "^8.0.2",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-date-picker": "^5.0.7",
     "react-native-element-dropdown": "^2.12.1",
